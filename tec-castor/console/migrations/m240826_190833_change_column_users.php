@@ -14,7 +14,7 @@ class m240826_190833_change_column_users extends Migration
     {
         $this->alterColumn('user','created_at', $this->dateTime());
         $this->alterColumn('user','updated_at', $this->dateTime());
-        $this->addColumn('user','profile',$this->integer(11));
+        $this->addColumn('user','profile',$this->integer(11)->comment('1 => Administrador, 2=> Almacenista'));
     }
 
     /**
