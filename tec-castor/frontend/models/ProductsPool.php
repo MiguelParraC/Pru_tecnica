@@ -1,7 +1,7 @@
 <?php
 
 namespace frontend\models;
-
+use common\models\User;
 use Yii;
 
 /**
@@ -31,6 +31,11 @@ class ProductsPool extends \yii\db\ActiveRecord
         return 'products_pool';
     }
 
+    // variables auxiliares
+    public $name_user_create, $name_user_uptade;
+    public $list_status;
+    
+
     /**
      * {@inheritdoc}
      */
@@ -54,14 +59,14 @@ class ProductsPool extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'status' => Yii::t('app', 'Status'),
-            'price' => Yii::t('app', 'Price'),
+            'name' => Yii::t('app', 'NOMBRE DEL PRODUCTO'),
+            'status' => Yii::t('app', 'ESTADO'),
+            'price' => Yii::t('app', 'PRECIO'),
             'stock' => Yii::t('app', 'Stock'),
-            'who_created' => Yii::t('app', 'Who Created'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'who_updated' => Yii::t('app', 'Who Updated'),
-            'updated_at' => Yii::t('app', 'Updated At'),
+            'who_created' => Yii::t('app', 'Quien Creó'),
+            'created_at' => Yii::t('app', 'Fecha Creado'),
+            'who_updated' => Yii::t('app', 'Quien Actualizó'),
+            'updated_at' => Yii::t('app', 'Fecha de actualizado'),
         ];
     }
 

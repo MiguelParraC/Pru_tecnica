@@ -22,9 +22,9 @@ class m240827_022342_create_tables_products extends Migration
                 'price' => $this->decimal(16, 2)->notNull(),
                 'stock' => $this->integer()->defaultValue(0),
                 'who_created' => $this->integer(11)->comment('Quien Creó'),
-                'created_at' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP')->comment('Fecha de creado'),
+                'created_at' => $this->dateTime()->comment('Fecha de creado'),
                 'who_updated' => $this->integer(11)->comment('Quien Actualiza'),
-                'updated_at' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')->comment('Fecha de actualizado'),
+                'updated_at' => $this->dateTime()->comment('Fecha de actualizado'),
             ]
         );
 
@@ -41,7 +41,7 @@ class m240827_022342_create_tables_products extends Migration
                 'price' => $this->decimal(16, 2)->notNull()->comment('Precio del producto al momento de salida'),
                 'exhausted' => $this->tinyInteger()->comment('0 => Se Agotó , 1 => Disponible'),
                 'who_created' => $this->integer(11)->comment('Quien Creó'),
-                'created_at' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP'),
+                'created_at' => $this->dateTime(),
             ]
         );
 

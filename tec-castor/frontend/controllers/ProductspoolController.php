@@ -9,6 +9,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\User;
 
+use yii\filters\AccessControl;
+
 /**
  * ProductspoolController implements the CRUD actions for ProductsPool model.
  */
@@ -22,6 +24,17 @@ class ProductspoolController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                'class' => AccessControl::class,
+                'only' => ['index', 'update', 'create'],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'update', 'create'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -70,8 +83,10 @@ class ProductspoolController extends Controller
     {
         $model = new ProductsPool();
 
+        $this->LoadDataForm($model);
+        
         if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
+            if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -131,5 +146,9 @@ class ProductspoolController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    public function LoadDataForm(&$model){
+        $model->list_status = [0 => 'Inactivo', 1 => 'Activo', 2 => 'Agotado'];
     }
 }
