@@ -32,8 +32,8 @@ class ProductsPool extends \yii\db\ActiveRecord
     }
 
     // variables auxiliares
-    public $name_user_create, $name_user_uptade;
-    public $list_status;
+    public $name_user_create, $name_user_updated;
+    public $list_status, $list_names, $model_action;
     
 
     /**
@@ -45,10 +45,11 @@ class ProductsPool extends \yii\db\ActiveRecord
             [['name', 'price'], 'required'],
             [['status', 'stock', 'who_created', 'who_updated'], 'integer'],
             [['price'], 'number'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['name','price','status','stock'], 'safe'],
             [['name'], 'string', 'max' => 255],
+            [['name'], 'unique'],
             [['who_created'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['who_created' => 'id']],
-            [['who_created'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['who_created' => 'id']],
+            [['who_updated'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['who_updated' => 'id']],
         ];
     }
 
@@ -95,7 +96,7 @@ class ProductsPool extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getWhoCreated0()
+    public function getWhoUpdated()
     {
         return $this->hasOne(User::class, ['id' => 'who_created']);
     }
