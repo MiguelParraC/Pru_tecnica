@@ -44,7 +44,7 @@ Este proyecto es una aplicación web construida con Yii2 para gestionar el inven
 
 - IDE: Visual Studio Code Editor
 - PHP = 8.0.30
-- DBMS - DBeaver
+- DBMS = DBeaver
 - Composer
 - Servidor Apache
 - Base de datos MySQL o MariaDB
@@ -73,7 +73,7 @@ Crea una base de datos en tu servidor MySQL. Luego, configura la conexión a la 
 
 ### 4. Ejecutar Migraciones
 Ejecuta las migraciones para crear las tablas necesarias en la base de datos:
-    php yii migrate
+     php yii migrate
 
 ### 5. Inicializa el servidor web local
      php yii serve --docroot="frontend/web"
