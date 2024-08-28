@@ -101,3 +101,28 @@ a.desc:after {
 {
     text-decoration: none;
 }
+
+/* Estilos personalizados para SweetAlert2 */
+.swal-modal {
+    background-color: #ffffff;
+    /* Color de fondo suave */
+    border-radius: 10px;
+    max-width: 500px;
+    /* Cambia el tamaño máximo del modal según sea necesario */
+    color: #333333;
+    /* Color de la letra */
+  }
+  
+  .swal-title {
+    color: #333333;
+    /* Color de la letra */
+    font-size: 24px;
+    /* Tamaño de la fuente del título */
+  }
+  
+  .swal-text {
+    color: #b40101;
+    /* Color de la letra */
+    font-size: 16px;
+    /* Tamaño de la fuente del texto */
+  }

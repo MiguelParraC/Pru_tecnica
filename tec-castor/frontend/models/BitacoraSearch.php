@@ -4,12 +4,12 @@ namespace frontend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\ProductsSales;
+use frontend\models\Bitacora;
 
 /**
- * ProductssalesSearch represents the model behind the search form of `frontend\models\ProductsSales`.
+ * BitacoraSearch represents the model behind the search form of `frontend\models\Bitacora`.
  */
-class ProductssalesSearch extends ProductsSales
+class BitacoraSearch extends Bitacora
 {
     /**
      * {@inheritdoc}
@@ -17,9 +17,8 @@ class ProductssalesSearch extends ProductsSales
     public function rules()
     {
         return [
-            [['id', 'product_id', 'quantity', 'exhausted'], 'integer'],
-            [['price'], 'number'],
-            [['created_at'], 'safe'],
+            [['id', 'user', 'accion'], 'integer'],
+            [['created_at', 'descripcion'], 'safe'],
         ];
     }
 
@@ -41,7 +40,7 @@ class ProductssalesSearch extends ProductsSales
      */
     public function search($params)
     {
-        $query = ProductsSales::find();
+        $query = Bitacora::find();
 
         // add conditions that should always apply here
 
@@ -60,13 +59,12 @@ class ProductssalesSearch extends ProductsSales
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'product_id' => $this->product_id,
-            'quantity' => $this->quantity,
-            'price' => $this->price,
-            'exhausted' => $this->exhausted,
-            // 'who_created' => $this->who_created,
-            // 'created_at' => $this->created_at,
+            'created_at' => $this->created_at,
+            'user' => $this->user,
+            'accion' => $this->accion,
         ]);
+
+        $query->andFilterWhere(['like', 'descripcion', $this->descripcion]);
 
         return $dataProvider;
     }

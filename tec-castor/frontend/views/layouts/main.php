@@ -40,12 +40,9 @@ AppAsset::register($this);
         if (!Yii::$app->user->isGuest) {
             $menuItems = [
                 ['label' => 'Productos', 'url' => ['/productspool/index']],
-                ['label' => 'Venta de Productos', 'url' => ['/productssales/index']],
-                // ['label' => 'Contact', 'url' => ['/site/contact']],
+                ['label' => 'Salida de Productos', 'url' => ['/productsouts/index']],
+                ['label' => 'Historial de movimientos', 'url' => ['/bitacora/index']],
             ];
-            // if (Yii::$app->user->isGuest) {
-            //     $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-            // }
 
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],

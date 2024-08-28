@@ -113,7 +113,7 @@ use kartik\select2\Select2;
 
     <?php
     $this->registerJsFile(
-        '@web/js/sales_product.js',
+        '@web/js/product_out.js',
         // '@web/js/main_v0.1.js',
         ['depends' => [\yii\web\JqueryAsset::className()]]
 

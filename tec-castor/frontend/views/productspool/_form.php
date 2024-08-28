@@ -39,9 +39,19 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'stock')->textInput([
                 'type' => 'number',
                 'class' => 'form-control bg-light border-primary',
+                'onchange' => 'check_stock(this)',
                 'min' => 0
             ]) ?>
         </div>
+
+        <div style="display: block;">
+            <?= $form->field($model, 'aux_stock')->textInput([
+                'type' => 'number',
+                'readonly' => true,
+                'min' => 0
+            ]) ?>
+        </div>
+
     </div>
     <?php if ($model->model_action != 'create') { ?>
         <div class="row">

@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use frontend\models\ProductsPool;
 use frontend\models\ProductspoolSearch;
+use frontend\models\Bitacora;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -106,6 +107,15 @@ class ProductspoolController extends Controller
                     $model->who_updated = Yii::$app->user->identity->id;
                     $model->updated_at = $fecha_update;
 
+                    
+                    $bitacora = new Bitacora();
+                    $bitacora->accion = 0;
+                    $list_action = $bitacora->getActions();
+                    $bitacora->user = Yii::$app->user->identity->id;
+                    $bitacora->created_at = $fecha_update;
+                    $bitacora->descripcion = 'El Usuario ' . Yii::$app->user->identity->username . '. Realizó: ' . $list_action[$bitacora->accion] . ', Del producto: ' . $model->name . '. El ' . $fecha_update;
+                    $bitacora->save();
+
                     if ($model->save()) {
                         return $this->redirect(['index']);
                     } else {
@@ -143,10 +153,36 @@ class ProductspoolController extends Controller
         $model->model_action = 'update';
         $this->LoadDataForm($model);
 
-        if ($this->request->isPost && $model->load($this->request->post()) ) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
 
+            // Estableciendo tiempo de creación
+            $TimeZone = "America/Mexico_City";
+            $fecha_objeto = new DateTime();
+            $fecha_objeto->setTimezone(new \DateTimeZone($TimeZone));
+            $fecha_update = $fecha_objeto->format("Y-m-d H:i:s");
+            // $fecha_archivos = $fecha_objeto->format("Y-m-d-H-i-s");
+            // $fecha_hoy = $fecha_objeto->format('Y-m-d');
 
-            return $this->redirect(['view', 'id' => $model->id]);
+            $model->who_updated = Yii::$app->user->identity->id;
+            $model->updated_at = $fecha_update;
+            $bitacora = new Bitacora();
+            // decidiendo Si se realizó aumento o no del producto
+            if ($model->aux_stock  < $model->stock) {
+                $bitacora->accion = 1;
+            } else {
+                $bitacora->accion = 3;
+            }
+
+            $list_action = $bitacora->getActions();
+
+            $bitacora->user = Yii::$app->user->identity->id;
+            $bitacora->created_at = $fecha_update;
+            $bitacora->descripcion = 'El Usuario ' . Yii::$app->user->identity->username . '. Realizó: ' . $list_action[$bitacora->accion] . ', Del producto: ' . $model->name . '. El ' . $fecha_update;
+            $bitacora->save();
+
+            if ($model->save()) {
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('update', [
@@ -188,11 +224,11 @@ class ProductspoolController extends Controller
     {
         $model->list_status = [0 => 'Inactivo', 1 => 'Activo', 2 => 'Agotado'];
         $model->list_names = ArrayHelper::map(ProductsPool::find()->all(), 'id', 'name');
-
-        if($model->model_action != 'create') {
+        $model->list_action = [0 => 'Creado', 1 => 'Entrada', 2 => 'Salida'];
+        if ($model->model_action != 'create') {
             $model->name_user_create = $model->whoCreated->username;
             $model->name_user_updated = $model->whoUpdated->username;
-            $hola =0;
+            $model->aux_stock = $model->stock;
         }
     }
 }

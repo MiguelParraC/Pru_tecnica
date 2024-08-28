@@ -8,15 +8,14 @@ use Yii;
  * This is the model class for table "products_sales".
  *
  * @property int $id
+ * @property int|null $poduct_out_id
  * @property int|null $product_id Relación con la tabla productos_pool
  * @property int|null $quantity Cantidad vendida
  * @property float $price Precio del producto al momento de salida
  * @property int|null $exhausted 0 => Se Agotó , 1 => Disponible
- * @property int|null $who_created Quien Creó
- * @property string|null $created_at
  *
+ * @property ProductsOuts $poductOut
  * @property ProductsPool $product
- * @property User $whoCreated
  */
 class ProductsSales extends \yii\db\ActiveRecord
 {
@@ -34,12 +33,11 @@ class ProductsSales extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['product_id', 'quantity', 'exhausted', 'who_created'], 'integer'],
+            [['poduct_out_id', 'product_id', 'quantity', 'exhausted'], 'integer'],
             [['price'], 'required'],
             [['price'], 'number'],
-            [['created_at'], 'safe'],
+            [['poduct_out_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductsOuts::class, 'targetAttribute' => ['poduct_out_id' => 'id']],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductsPool::class, 'targetAttribute' => ['product_id' => 'id']],
-            [['who_created'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['who_created' => 'id']],
         ];
     }
 
@@ -50,13 +48,22 @@ class ProductsSales extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'poduct_out_id' => Yii::t('app', 'Poduct Out ID'),
             'product_id' => Yii::t('app', 'Product ID'),
             'quantity' => Yii::t('app', 'Quantity'),
             'price' => Yii::t('app', 'Price'),
             'exhausted' => Yii::t('app', 'Exhausted'),
-            'who_created' => Yii::t('app', 'Who Created'),
-            'created_at' => Yii::t('app', 'Created At'),
         ];
+    }
+
+    /**
+     * Gets query for [[PoductOut]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPoductOut()
+    {
+        return $this->hasOne(ProductsOuts::class, ['id' => 'poduct_out_id']);
     }
 
     /**
@@ -67,15 +74,5 @@ class ProductsSales extends \yii\db\ActiveRecord
     public function getProduct()
     {
         return $this->hasOne(ProductsPool::class, ['id' => 'product_id']);
-    }
-
-    /**
-     * Gets query for [[WhoCreated]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getWhoCreated()
-    {
-        return $this->hasOne(User::class, ['id' => 'who_created']);
     }
 }

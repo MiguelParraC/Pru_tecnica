@@ -33,7 +33,8 @@ class ProductsPool extends \yii\db\ActiveRecord
 
     // variables auxiliares
     public $name_user_create, $name_user_updated;
-    public $list_status, $list_names, $model_action;
+    public $list_status, $list_names, $model_action, $list_action;
+    public $aux_stock;
     
 
     /**
@@ -45,7 +46,7 @@ class ProductsPool extends \yii\db\ActiveRecord
             [['name', 'price'], 'required'],
             [['status', 'stock', 'who_created', 'who_updated'], 'integer'],
             [['price'], 'number'],
-            [['name','price','status','stock'], 'safe'],
+        [['name','price','status','stock', 'aux_stock'], 'safe'],
             [['name'], 'string', 'max' => 255],
             [['name'], 'unique'],
             [['who_created'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['who_created' => 'id']],

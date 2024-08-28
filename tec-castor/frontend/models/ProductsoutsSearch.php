@@ -4,12 +4,12 @@ namespace frontend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\ProductsSales;
+use frontend\models\ProductsOuts;
 
 /**
- * ProductssalesSearch represents the model behind the search form of `frontend\models\ProductsSales`.
+ * ProductsoutsSearch represents the model behind the search form of `frontend\models\ProductsOuts`.
  */
-class ProductssalesSearch extends ProductsSales
+class ProductsoutsSearch extends ProductsOuts
 {
     /**
      * {@inheritdoc}
@@ -17,9 +17,8 @@ class ProductssalesSearch extends ProductsSales
     public function rules()
     {
         return [
-            [['id', 'product_id', 'quantity', 'exhausted'], 'integer'],
-            [['price'], 'number'],
-            [['created_at'], 'safe'],
+            [['id', 'who_created', 'who_updated'], 'integer'],
+            [['created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -41,7 +40,7 @@ class ProductssalesSearch extends ProductsSales
      */
     public function search($params)
     {
-        $query = ProductsSales::find();
+        $query = ProductsOuts::find();
 
         // add conditions that should always apply here
 
@@ -60,12 +59,10 @@ class ProductssalesSearch extends ProductsSales
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'product_id' => $this->product_id,
-            'quantity' => $this->quantity,
-            'price' => $this->price,
-            'exhausted' => $this->exhausted,
-            // 'who_created' => $this->who_created,
-            // 'created_at' => $this->created_at,
+            'who_created' => $this->who_created,
+            'created_at' => $this->created_at,
+            'who_updated' => $this->who_updated,
+            'updated_at' => $this->updated_at,
         ]);
 
         return $dataProvider;
