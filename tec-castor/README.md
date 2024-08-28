@@ -55,12 +55,16 @@ Este proyecto es una aplicación web construida con Yii2 para gestionar el inven
 
 ### 2. Instalar Dependencias
 Asegúrate de tener Composer instalado. Ejecuta el siguiente comando para instalar las dependencias de PHP: 
+```bash
    composer install
+   ```
+```bash
    composer update
-
+```
 ### 3. Configuración de la Base de Datos
-Crea una base de datos en tu servidor MySQL. Luego, configura la conexión a la base de datos en el archivo common/config/main-local.php:
+Crea una base de datos en tu servidor MySQL. Luego, configura la conexión a la base de datos en el archivo ``common/config/main-local.php`:
 
+```html
 'components' => [
     'db' => [
         'class' => 'yii\db\Connection',
@@ -70,6 +74,7 @@ Crea una base de datos en tu servidor MySQL. Luego, configura la conexión a la 
         'charset' => 'utf8',
     ],
 ],
+```
 
 ### 4. Ejecutar Migraciones
 Ejecuta las migraciones para crear las tablas necesarias en la base de datos:
