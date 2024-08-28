@@ -3,7 +3,6 @@
 use unclead\multipleinput\MultipleInput;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use kartik\select2\Select2;
 
 
 /** @var yii\web\View $this */
@@ -15,8 +14,8 @@ use kartik\select2\Select2;
 
     <?php $form = ActiveForm::begin(); ?>
     <?php
-    $hidden_add = 'btn btn-primary';
-    $hidden_remove = 'btn btn-danger';
+    // $hidden_add = 'btn btn-primary';
+    // $hidden_remove = 'btn btn-danger';
     ?>
 
     <?= $form->field($model, 'sales_products')->widget(MultipleInput::className(), [
@@ -32,8 +31,8 @@ use kartik\select2\Select2;
             'width' => '100%',
         ],
         'addButtonOptions' => [
-            'class' => $hidden_add,
-            'label' => '<i class="fas fa-plus"></i>', // Ícono Font Awesome
+            'class' => 'btn btn-primary',
+            'label' => '<i class="fa-solid fa-square-plus"></i>', // Ícono Font Awesome
             'encode' => false, // Importante para permitir HTML en el label
             // 'options' => function () {
             //     $array_options = [];
@@ -43,7 +42,7 @@ use kartik\select2\Select2;
             // }
         ],
         'removeButtonOptions' => [
-            'class' => $hidden_remove,
+            'class' =>  'btn btn-danger',
             'label' => '<i class="fas fa-trash"></i>', // ��cono Font Awesome
         ],
         'columns' => [
