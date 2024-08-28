@@ -48,7 +48,7 @@ class m240827_022342_create_tables_products extends Migration
         // llaves foráneas 
 
         $this->addForeignKey('fk_product_productspool', 'products_sales', 'product_id', 'products_pool', 'id');
-        $this->addForeignKey('fk_produtssales_user_create', 'products_sales', 'who_created', 'user', 'id');
+        // $this->addForeignKey('fk_produtssales_user_create', 'products_sales', 'who_created', 'user', 'id');
     }
 
     /**
