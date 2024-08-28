@@ -42,11 +42,12 @@ Este proyecto es una aplicación web construida con Yii2 para gestionar el inven
 
 ## Requisitos Previos
 
-- PHP >= 7.4
+- IDE: Visual Studio Code Editor
+- PHP = 8.0.30
+- DBMS - DBeaver
 - Composer
-- Servidor Apache o Nginx
+- Servidor Apache
 - Base de datos MySQL o MariaDB
-- Node.js (para la instalación de dependencias frontend)
 
 ## Instrucciones de Instalación
 
