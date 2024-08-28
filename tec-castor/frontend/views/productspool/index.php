@@ -18,9 +18,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Crear nuevo Producto'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <?php if (Yii::$app->user->identity->add_new_product == 1) { ?>
+        <p>
+            <?= Html::a(Yii::t('app', 'Crear nuevo Producto'), ['create'], ['class' => 'btn btn-success']) ?>
+        </p>
+    <?php } ?>
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); 
@@ -64,6 +66,34 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'options' => ['class' => 'action-column'],
+                'buttons' => [
+                    'view' => function(){
+                        return '';
+                    },
+                    'delete' => function(){
+                        return '';
+                    },
+                    
+
+                    'update' => function ($url, $model, $key) {
+                        if (Yii::$app->user->identity->add_num_products == 1 || Yii::$app->user->identity->activate_products == 1) {
+                            return Html::a("<span class='bi bi-pencil-fill btn btn-primary' style='position: static;'></span>", $url);
+
+                        } else {
+                            return '';
+                        }
+                    },
+                ]
+                // 'template' => '{view}{update}',
+            ],
+
+
+
+
 
             // 'id',
             [
@@ -143,12 +173,12 @@ $this->params['breadcrumbs'][] = $this->title;
             //'created_at',
             //'who_updated',
             //'updated_at',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, ProductsPool $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                }
-            ],
+            // [
+            //     'class' => ActionColumn::className(),
+            //     'urlCreator' => function ($action, ProductsPool $model, $key, $index, $column) {
+            //         return Url::toRoute([$action, 'id' => $model->id]);
+            //     }
+            // ],
         ],
     ]); ?>
 

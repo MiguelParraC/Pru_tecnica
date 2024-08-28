@@ -25,8 +25,16 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="row">
+        <?php if (Yii::$app->user->identity->activate_products == 1) {
+            $disable_status = false;
+        } else {
+            $disable_status = true;
+        } ?>
         <div class="col-md-4">
-            <?= $form->field($model, 'status')->dropDownList($model->list_status, ['class' => 'form-control bg-light border-primary']) ?>
+            <?= $form->field($model, 'status')->dropDownList($model->list_status, [
+                'class' => 'form-control bg-light border-primary',
+                'disabled' => $disable_status,
+            ]) ?>
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'price')->textInput([
@@ -35,8 +43,14 @@ use yii\widgets\ActiveForm;
                 'min' => 0
             ]) ?>
         </div>
+        <?php if (Yii::$app->user->identity->add_num_products == 1) {
+            $read_add = false;
+        } else {
+            $read_add = true;
+        } ?>
         <div class="col-md-4">
             <?= $form->field($model, 'stock')->textInput([
+                'readonly' => $read_add,
                 'type' => 'number',
                 'class' => 'form-control bg-light border-primary',
                 'onchange' => 'check_stock(this)',
@@ -44,7 +58,8 @@ use yii\widgets\ActiveForm;
             ]) ?>
         </div>
 
-        <div style="display: block;">
+
+        <div style="display: none;">
             <?= $form->field($model, 'aux_stock')->textInput([
                 'type' => 'number',
                 'readonly' => true,
@@ -52,7 +67,9 @@ use yii\widgets\ActiveForm;
             ]) ?>
         </div>
 
+
     </div>
+    <hr style="border: 1px solid #000;">
     <?php if ($model->model_action != 'create') { ?>
         <div class="row">
             <div class="col-md-6">
@@ -76,7 +93,7 @@ use yii\widgets\ActiveForm;
 
     <?php } ?>
     <div class="col-12 text-center">
-        <?= Html::submitButton(Yii::t('app', 'Guardar'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Guardar'), ['class' => 'btn btn-success guardar-class']) ?>
     </div>
     <?php ActiveForm::end(); ?>
     <?php

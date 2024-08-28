@@ -6,21 +6,6 @@
     <br>
 </p>
 
-Yii 2 Advanced Project Template is a skeleton [Yii 2](https://www.yiiframework.com/) application best for
-developing complex Web applications with multiple tiers.
-
-The template includes three tiers: front end, back end, and console, each of which
-is a separate Yii application.
-
-The template is designed to work in a team development environment. It supports
-deploying the application in different environments.
-
-Documentation is at [docs/guide/README.md](docs/guide/README.md).
-
-[![Latest Stable Version](https://img.shields.io/packagist/v/yiisoft/yii2-app-advanced.svg)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Total Downloads](https://img.shields.io/packagist/dt/yiisoft/yii2-app-advanced.svg)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![build](https://github.com/yiisoft/yii2-app-advanced/workflows/build/badge.svg)](https://github.com/yiisoft/yii2-app-advanced/actions?query=workflow%3Abuild)
-
 DIRECTORY STRUCTURE
 -------------------
 
@@ -36,15 +21,6 @@ console
     migrations/          contains database migrations
     models/              contains console-specific model classes
     runtime/             contains files generated during runtime
-backend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains backend configurations
-    controllers/         contains Web controller classes
-    models/              contains backend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for backend application    
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
 frontend
     assets/              contains application assets such as JavaScript and CSS
     config/              contains frontend configurations
@@ -58,3 +34,45 @@ frontend
 vendor/                  contains dependent 3rd-party packages
 environments/            contains environment-based overrides
 ```
+
+
+# Proyecto Yii2 - Gestión de Inventario
+
+Este proyecto es una aplicación web construida con Yii2 para gestionar el inventario de productos. 
+
+## Requisitos Previos
+
+- PHP >= 7.4
+- Composer
+- Servidor Apache o Nginx
+- Base de datos MySQL o MariaDB
+- Node.js (para la instalación de dependencias frontend)
+
+## Instrucciones de Instalación
+
+### 1. Clonar el Repositorio
+
+### 2. Instalar Dependencias
+Asegúrate de tener Composer instalado. Ejecuta el siguiente comando para instalar las dependencias de PHP: 
+   composer install
+   composer update
+
+### 3. Configuración de la Base de Datos
+Crea una base de datos en tu servidor MySQL. Luego, configura la conexión a la base de datos en el archivo common/config/main-local.php:
+
+'components' => [
+    'db' => [
+        'class' => 'yii\db\Connection',
+        'dsn' => 'mysql:host=localhost;dbname=nombre_base_datos',
+        'username' => 'tu_usuario',
+        'password' => 'tu_contraseña',
+        'charset' => 'utf8',
+    ],
+],
+
+### 4. Ejecutar Migraciones
+Ejecuta las migraciones para crear las tablas necesarias en la base de datos:
+    php yii migrate
+
+### 5. Inicializa el servidor web local
+     php yii serve --docroot="frontend/web"

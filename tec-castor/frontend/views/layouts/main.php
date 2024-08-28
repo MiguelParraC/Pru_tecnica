@@ -22,6 +22,8 @@ AppAsset::register($this);
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+     <!-- Bootstrap Icons CDN -->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -38,11 +40,14 @@ AppAsset::register($this);
             ],
         ]);
         if (!Yii::$app->user->isGuest) {
-            $menuItems = [
-                ['label' => 'Productos', 'url' => ['/productspool/index']],
-                ['label' => 'Salida de Productos', 'url' => ['/productsouts/index']],
-                ['label' => 'Historial de movimientos', 'url' => ['/bitacora/index']],
-            ];
+            $menuItems[] = ['label' => 'Productos', 'url' => ['/productspool/index']];
+            
+            if(Yii::$app->user->identity->see_out_product == 1){
+                $menuItems[] = ['label' => 'Salida de Productos', 'url' => ['/productsouts/index']];
+            }
+            if(Yii::$app->user->identity->see_history == 1){
+                $menuItems[] = ['label' => 'Historial de movimientos', 'url' => ['/bitacora/index']];
+            }
 
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],

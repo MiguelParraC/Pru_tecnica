@@ -28,83 +28,98 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); 
     ?>
 
+    <?php if (Yii::$app->user->identity->id == 1) { ?>
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'options' => ['class' => 'action-column'],
+                    'buttons' => [
+                        'view' => function () {
+                            return '';
+                        },
+                        'delete' => function () {
+                            return '';
+                        },
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            // 'id',
-            [
-                'attribute' => 'who_created',
-                'label' => Yii::t('app', 'Quien Creó'),
-                'value' => function ($model) {
-                    if ($model->who_created != '') {
-                        $usuario_crea = \common\models\User::find()->where(['id' => $model->who_created])->one();
-                        if ($usuario_crea) {
-                            return $usuario_crea->username;
+                        'update' => function ($url, $model, $key) {
+                            if (Yii::$app->user->identity->id == 1) {
+                                return Html::a("<span class='bi bi-pencil-fill btn btn-primary' style='position: static;'></span>", $url);
+                            } else {
+                                return '';
+                            }
+                        },
+                    ]
+                    // 'template' => '{view}{update}',
+                ],
+                // 'id',
+                [
+                    'attribute' => 'who_created',
+                    'label' => Yii::t('app', 'Quien Creó'),
+                    'value' => function ($model) {
+                        if ($model->who_created != '') {
+                            $usuario_crea = \common\models\User::find()->where(['id' => $model->who_created])->one();
+                            if ($usuario_crea) {
+                                return $usuario_crea->username;
+                            } else {
+                                return '';
+                            }
                         } else {
                             return '';
                         }
-                    } else {
-                        return '';
-                    }
-                },
-                'filter' => Html::activeDropDownList(
-                    $searchModel,
-                    'who_created',
-                    $searchModel->lista_quien_creo,
-                    ['class' => 'form-control', 'prompt' => 'VER TODOS']
+                    },
+                    'filter' => Html::activeDropDownList(
+                        $searchModel,
+                        'who_created',
+                        $searchModel->lista_quien_creo,
+                        ['class' => 'form-control', 'prompt' => 'VER TODOS']
 
-                ),
-            ],
-            [
-                'attribute' => 'created_at',
-                'value' => function ($model) use ($searchModel) {
-                    return isset($model->created_at) ? $model->created_at : '';
-                }
-                
-            ],
-            [
-                'attribute' => 'who_updated',
-                'label' => Yii::t('app', 'Quien Actualizó'),
-                'value' => function ($model) {
-                    if ($model->who_updated != '') {
-                        $usuario_crea = \common\models\User::find()->where(['id' => $model->who_updated])->one();
-                        if ($usuario_crea) {
-                            return $usuario_crea->username;
+                    ),
+                ],
+                [
+                    'attribute' => 'created_at',
+                    'value' => function ($model) use ($searchModel) {
+                        return isset($model->created_at) ? $model->created_at : '';
+                    }
+
+                ],
+                [
+                    'attribute' => 'who_updated',
+                    'label' => Yii::t('app', 'Quien Actualizó'),
+                    'value' => function ($model) {
+                        if ($model->who_updated != '') {
+                            $usuario_crea = \common\models\User::find()->where(['id' => $model->who_updated])->one();
+                            if ($usuario_crea) {
+                                return $usuario_crea->username;
+                            } else {
+                                return '//';
+                            }
                         } else {
                             return '//';
                         }
-                    } else {
-                        return '//';
-                    }
-                },
-                'filter' => Html::activeDropDownList(
-                    $searchModel,
-                    'who_updated',
-                    $searchModel->lista_quien_actualiza,
-                    ['class' => 'form-control', 'prompt' => 'VER TODOS']
+                    },
+                    'filter' => Html::activeDropDownList(
+                        $searchModel,
+                        'who_updated',
+                        $searchModel->lista_quien_actualiza,
+                        ['class' => 'form-control', 'prompt' => 'VER TODOS']
 
-                ),
-            ],
-            [
-                'attribute' => 'updated_at',
-                'value' => function ($model) use ($searchModel) {
-                    return isset($model->updated_at) ? $model->updated_at : '//';
-                },
+                    ),
+                ],
+                [
+                    'attribute' => 'updated_at',
+                    'value' => function ($model) use ($searchModel) {
+                        return isset($model->updated_at) ? $model->updated_at : '//';
+                    },
+
+                ],
 
             ],
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, ProductsOuts $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                }
-            ],
-        ],
-    ]); ?>
-
+        ]); ?>
+    <?php } ?>
     <?php Pjax::end(); ?>
 
 </div>
