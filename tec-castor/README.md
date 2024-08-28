@@ -52,7 +52,7 @@ Este proyecto es una aplicación web construida con Yii2 para gestionar el inven
 ## Instrucciones de Instalación
 
 ### 1. Clonar el Repositorio
-
+Antes de iniciar asegúrese de estar en la carpeta del proyecto `tec-castor`
 ### 2. Instalar Dependencias
 Asegúrate de tener Composer instalado. Ejecuta el siguiente comando para instalar las dependencias de PHP: 
 ```bash
