@@ -82,4 +82,12 @@ Ejecuta las migraciones para crear las tablas necesarias en la base de datos:
     php yii migrate
 ```
 ### 5. Inicializa el servidor web local
+```bash
      php yii serve --docroot="frontend/web"
+```
+
+    Utilice los siguientes usuarios: 
+    ```html
+        admin1 -> admin123
+        almacenista -> almacenista123
+    ```
