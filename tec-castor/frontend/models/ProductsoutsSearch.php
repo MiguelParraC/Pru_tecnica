@@ -6,11 +6,14 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use frontend\models\ProductsOuts;
 
+use yii\helpers\ArrayHelper;
 /**
  * ProductsoutsSearch represents the model behind the search form of `frontend\models\ProductsOuts`.
  */
 class ProductsoutsSearch extends ProductsOuts
 {
+    public $lista_quien_creo,$lista_quien_actualiza;
+    public $start_date, $end_date ;
     /**
      * {@inheritdoc}
      */
@@ -18,7 +21,7 @@ class ProductsoutsSearch extends ProductsOuts
     {
         return [
             [['id', 'who_created', 'who_updated'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at', 'who_created', 'start_date', 'end_date'], 'safe'],
         ];
     }
 
@@ -56,14 +59,24 @@ class ProductsoutsSearch extends ProductsOuts
             return $dataProvider;
         }
 
+        $this->lista_quien_creo = ArrayHelper::map(ProductsOuts::find()->distinct()->all(), 'who_created', 'whoCreated.username');
+        $this->lista_quien_actualiza = ArrayHelper::map(ProductsOuts::find()->distinct()->all(), 'who_updated', 'whoUpdated.username');
+
+        if ($this->start_date && $this->end_date) {
+            $query->andFilterWhere(['between', 'updated_at', $this->start_date, $this->end_date]);
+        }
+
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'who_created' => $this->who_created,
-            'created_at' => $this->created_at,
+            // 'created_at' => $this->created_at,
             'who_updated' => $this->who_updated,
-            'updated_at' => $this->updated_at,
+            // 'updated_at' => $this->updated_at,
         ]);
+        $query->andFilterWhere(['like', 'created_at', $this->created_at])
+            ->andFilterWhere(['like', 'updated_at', $this->updated_at]);
 
         return $dataProvider;
     }

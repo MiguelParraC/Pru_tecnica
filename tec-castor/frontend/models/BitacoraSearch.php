@@ -5,12 +5,14 @@ namespace frontend\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use frontend\models\Bitacora;
+use yii\helpers\ArrayHelper;
 
 /**
  * BitacoraSearch represents the model behind the search form of `frontend\models\Bitacora`.
  */
 class BitacoraSearch extends Bitacora
 {
+    public $lista_quien_creo, $list_action;
     /**
      * {@inheritdoc}
      */
@@ -55,16 +57,21 @@ class BitacoraSearch extends Bitacora
             // $query->where('0=1');
             return $dataProvider;
         }
+        $this->lista_quien_creo = ArrayHelper::map(Bitacora::find()->distinct()->all(), 'user', 'user0.username');
+
+        $bitacora = new Bitacora();
+        $this->list_action = $bitacora->getActions();
 
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'created_at' => $this->created_at,
+            // 'created_at' => $this->created_at,
             'user' => $this->user,
             'accion' => $this->accion,
         ]);
 
-        $query->andFilterWhere(['like', 'descripcion', $this->descripcion]);
+        $query->andFilterWhere(['like', 'descripcion', $this->descripcion])
+            ->andFilterWhere(['like', 'created_at', $this->created_at]);
 
         return $dataProvider;
     }

@@ -5,7 +5,7 @@ namespace frontend\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use frontend\models\ProductsPool;
-use frontend\models\Bitacora;
+
 use yii\helpers\ArrayHelper;
 
 /**

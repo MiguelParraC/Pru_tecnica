@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
 /** @var yii\web\View $this */
 /** @var frontend\models\BitacoraSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -22,7 +23,8 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -30,17 +32,56 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'created_at',
-            'user',
-            'accion',
-            'descripcion:ntext',
+            
             [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Bitacora $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                'attribute' => 'user',
+                'label' => Yii::t('app', 'Quien Creó'),
+                'value' => function ($model) {
+                    if ($model->user != '') {
+                        $usuario_crea = \common\models\User::find()->where(['id' => $model->user])->one();
+                        if ($usuario_crea) {
+                            return $usuario_crea->username;
+                        } else {
+                            return '';
+                        }
+                    } else {
+                        return '';
+                    }
+                },
+                'filter' => Html::activeDropDownList(
+                    $searchModel,
+                    'user',
+                    $searchModel->lista_quien_creo,
+                    ['class' => 'form-control', 'prompt' => 'VER TODOS']
+
+                ),
             ],
+            [
+                'attribute' => 'accion',
+                'label' => Yii::t('app', 'Quien Creó'),
+                'value' => function ($model) use ($searchModel){
+                    if ($model->accion != '') {
+                        return $searchModel->list_action[$model->accion];
+                    } else {
+                        return '';
+                    }
+                },
+                'filter' => Html::activeDropDownList(
+                    $searchModel,
+                    'accion',
+                    $searchModel->list_action,
+                    ['class' => 'form-control', 'prompt' => 'VER TODOS']
+
+                ),
+            ],
+            'descripcion:ntext',
+            'created_at',
+            // [
+            //     'class' => ActionColumn::className(),
+            //     'urlCreator' => function ($action, Bitacora $model, $key, $index, $column) {
+            //         return Url::toRoute([$action, 'id' => $model->id]);
+            //     }
+            // ],
         ],
     ]); ?>
 

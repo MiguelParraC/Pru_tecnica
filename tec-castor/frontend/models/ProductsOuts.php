@@ -1,6 +1,7 @@
 <?php
 
 namespace frontend\models;
+use common\models\User;
 
 use Yii;
 
@@ -25,8 +26,8 @@ class ProductsOuts extends \yii\db\ActiveRecord
         return 'products_outs';
     }
 
-    public $list_products,$sales_products,$count_products, $list_action;
-    
+    public $list_products, $sales_products, $count_products, $list_action;
+
     /**
      * {@inheritdoc}
      */
@@ -35,6 +36,8 @@ class ProductsOuts extends \yii\db\ActiveRecord
         return [
             [['who_created', 'who_updated'], 'integer'],
             [['sales_products'], 'safe'],
+            [['who_created'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['who_created' => 'id']],
+            [['who_updated'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['who_updated' => 'id']],
         ];
     }
 
@@ -61,4 +64,24 @@ class ProductsOuts extends \yii\db\ActiveRecord
     {
         return $this->hasMany(ProductsSales::class, ['poduct_out_id' => 'id']);
     }
+    	 
+   /** 
+    * Gets query for [[WhoCreated]]. 
+    * 
+    * @return \yii\db\ActiveQuery 
+    */ 
+   public function getWhoCreated() 
+   { 
+       return $this->hasOne(User::class, ['id' => 'who_created']); 
+   } 
+ 
+   /** 
+    * Gets query for [[WhoUpdated]]. 
+    * 
+    * @return \yii\db\ActiveQuery 
+    */ 
+   public function getWhoUpdated() 
+   { 
+       return $this->hasOne(User::class, ['id' => 'who_updated']); 
+   } 
 }
