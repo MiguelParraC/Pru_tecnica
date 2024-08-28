@@ -107,6 +107,9 @@ class ProductspoolController extends Controller
                     $model->who_updated = Yii::$app->user->identity->id;
                     $model->updated_at = $fecha_update;
 
+                    if($model->stock == 0) { 
+                        $model->status = 2;
+                    }
                     
                     $bitacora = new Bitacora();
                     $bitacora->accion = 0;
@@ -162,6 +165,10 @@ class ProductspoolController extends Controller
             $fecha_update = $fecha_objeto->format("Y-m-d H:i:s");
             // $fecha_archivos = $fecha_objeto->format("Y-m-d-H-i-s");
             // $fecha_hoy = $fecha_objeto->format('Y-m-d');
+
+            if($model->stock == 0) { 
+                $model->status = 2;
+            }
 
             $model->who_updated = Yii::$app->user->identity->id;
             $model->updated_at = $fecha_update;

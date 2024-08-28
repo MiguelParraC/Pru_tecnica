@@ -103,6 +103,9 @@ class ProductsoutsController extends Controller
                             $model_productpool = ProductsPool::findOne($value['product']);
                             // Guardando el precio del producto en el momento para llevar un historial de ventas
                             $model_productpool->stock = $model_productpool->stock - $value['quantity'];
+                            if($model_productpool->stock == 0){
+                                $model_productpool->status = 2;
+                            }
                             if (!$model_productpool->save()) {
                                 $model_productpool->errors;
                             }

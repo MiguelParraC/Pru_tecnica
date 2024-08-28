@@ -46,7 +46,7 @@ class ProductsPool extends \yii\db\ActiveRecord
             [['name', 'price'], 'required'],
             [['status', 'stock', 'who_created', 'who_updated'], 'integer'],
             [['price'], 'number'],
-        [['name','price','status','stock', 'aux_stock'], 'safe'],
+            [['name','price','status','stock', 'aux_stock'], 'safe'],
             [['name'], 'string', 'max' => 255],
             [['name'], 'unique'],
             [['who_created'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['who_created' => 'id']],
@@ -100,5 +100,9 @@ class ProductsPool extends \yii\db\ActiveRecord
     public function getWhoUpdated()
     {
         return $this->hasOne(User::class, ['id' => 'who_created']);
+    }
+
+    public function getStatus() {
+        return [0 => 'Inactivo', 1 => 'Activo', 2 => 'Agotado'];
     }
 }
