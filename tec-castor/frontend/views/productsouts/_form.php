@@ -3,6 +3,7 @@
 use unclead\multipleinput\MultipleInput;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
 
 
 /** @var yii\web\View $this */
@@ -10,12 +11,12 @@ use yii\widgets\ActiveForm;
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="products-sales-form">
+<div class="products-pool-form">
 
     <?php $form = ActiveForm::begin(); ?>
     <?php
-    // $hidden_add = 'btn btn-primary';
-    // $hidden_remove = 'btn btn-danger';
+    $hidden_add = 'btn btn-primary';
+    $hidden_remove = 'btn btn-danger';
     ?>
 
     <?= $form->field($model, 'sales_products')->widget(MultipleInput::className(), [
@@ -31,8 +32,8 @@ use yii\widgets\ActiveForm;
             'width' => '100%',
         ],
         'addButtonOptions' => [
-            'class' => 'btn btn-primary',
-            'label' => '<i class="fa-solid fa-square-plus"></i>', // Ícono Font Awesome
+            'class' => $hidden_add,
+            'label' => '<i class="fas fa-plus"></i>', // Ícono Font Awesome
             'encode' => false, // Importante para permitir HTML en el label
             // 'options' => function () {
             //     $array_options = [];
@@ -42,7 +43,7 @@ use yii\widgets\ActiveForm;
             // }
         ],
         'removeButtonOptions' => [
-            'class' =>  'btn btn-danger',
+            'class' => $hidden_remove,
             'label' => '<i class="fas fa-trash"></i>', // ��cono Font Awesome
         ],
         'columns' => [
@@ -105,7 +106,7 @@ use yii\widgets\ActiveForm;
 
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Guardar'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Guardar'), ['class' => 'btn btn-success guardar-class']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
